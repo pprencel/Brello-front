@@ -1,3 +1,3 @@
 {
-  "TEST": "https://httpbin.org/get"
+  "TEST": "https://shrouded-fjord-27358.herokuapp.com/?format=json"
 }
