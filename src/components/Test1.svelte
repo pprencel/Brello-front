@@ -12,6 +12,6 @@
 
 <style>
   h1 {
-    color: tomato;
+    color: green;
   }
 </style>
