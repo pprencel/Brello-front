@@ -2,6 +2,7 @@
   let name = 'Brello';
   import Test1 from './components/Test1.svelte';
   import Test2 from './components/Test2.svelte';
+  import Table from './components/Table.svelte';
   import SvelteRouter, { Link } from 'svelte-router'
 
   function create (node) {
@@ -38,4 +39,8 @@
     <Link to="/test2">Test2</Link>
     <div use:create></div>
   </div>
+
+  <Table/>
+
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </div>
