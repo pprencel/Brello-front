@@ -3,6 +3,7 @@
   import Test1 from './components/Test1.svelte';
   import Test2 from './components/Test2.svelte';
   import Table from './components/Table.svelte';
+  import TablesView from './components/TablesView.svelte';
   import SvelteRouter, { Link } from 'svelte-router'
 
   function create (node) {
@@ -15,6 +16,15 @@
     }, {
       path: '/test2',
       component: Test2
+    }, {
+      path: '/tables',
+      component: TablesView
+    }, {
+      path: `/table`,
+      component: Table,
+      props: {
+        id: null
+      }
     }]
   })
 
@@ -32,15 +42,16 @@
   }
 </style>
 
-<div id="main">
-  <h1>Hello {name}!</h1>
+<div id="main" class="bg-blue-100">
   <div>
-    <Link to="/test1">Test1</Link>
-    <Link to="/test2">Test2</Link>
+    <Link to="/table" props={{id: 3}}>Table</Link>
+    <div class="bg-blue-500">
+      <Link to="/tables">[Tables]</Link>
+    </div>
     <div use:create></div>
   </div>
 
-  <Table/>
+  <!-- <Table/> -->
 
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </div>

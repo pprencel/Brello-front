@@ -2,7 +2,7 @@
   import API from '../utils/api';
   let response;
   API('').then(resp => {
-    console.log(resp);
+    // console.log(resp);
     response = resp.status;
   })
 

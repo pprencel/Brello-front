@@ -30,6 +30,7 @@
     "svelte": "^3.0.0",
     "svelte-loader": "^2.13.6",
     "svelte-preprocess": "^3.1.1",
-    "svelte-router": "^3.0.0-alpha.2"
+    "svelte-router": "^3.0.0-alpha.2",
+    "svelte-routing": "^1.4.0"
   }
 }
