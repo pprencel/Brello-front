@@ -1,26 +1,51 @@
 <script>
-  import { onMount } from 'svelte';
-  import { TableStore } from '../stores/store.js';
-
+  import { onMount, beforeUpdate, afterUpdate } from 'svelte';
+  import { tablesStore } from '../stores/tablesStore.js';
+  import { link } from "svelte-routing";
+  let tables;
   const testFunction = async () => {}
-  let promise = testFunction()
-  //
-  // onMount(()=> {
-  //   const unsubscribe = TableStore.subscribe(async (value) => {
-  //     table = value
-  //   })
-  //   console.log(table.users);
-  // })
-  console.log('tutajs');
+  let promise = tablesStore.loadTables()
+
+  onMount(()=> {
+    const unsubscribe = tablesStore.subscribe(async (value) => {
+      tables = value
+    })
+  })
+
+  const handleAddTable = async () => {
+    console.log('try add');
+  }
+
+  beforeUpdate(() => {
+    // promise = tablesStore.loadTables();
+  });
 
   const logError = (error) => {
     console.log(`failed to change the name, e: ${error}`)
     return ''
   }
 </script>
-<div class="flex flex-column bg-red-400 w-full p-6">
-  <div>
-    TABLES VIEW
+<div class="flex flex-wrap bg-red-400 w-full p-6">
+  <div class="text-2xl font-bold p-4">
+    Yours Tables
   </div>
 
+  <div class="w-full flex flex-row">
+    {#await promise}
+      <p>loading...</p>
+    {:then}
+      {#each tables as table}
+        <a href={`table/${table.id}`} use:link class="bg-red-500 p-8 m-4 w-1/4 border-4 truncate">
+          <div>
+            {table.name}
+          </div>
+        </a>
+      {/each}
+      <button on:click={handleAddTable} class="bg-red-600 p-8 m-4 w-1/4 border-4 truncate">
+          +
+      </button>
+    {:catch error}
+      <p> error </p>
+    {/await}
+  </div>
 </div>

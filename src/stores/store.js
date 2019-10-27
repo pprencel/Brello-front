@@ -1,6 +1,5 @@
 import { writable } from 'svelte/store';
 import API from '../utils/api';
-let response;
 
 let mockTabValues = {
   id: 1,
@@ -29,8 +28,6 @@ let mockEmptyTabValues = {
   lists: []
 }
 
-// export const resp = writable(mockTabValues);
-
 function createTableStore() {
     const { subscribe, set, update } = writable(mockEmptyTabValues);
 
@@ -39,7 +36,6 @@ function createTableStore() {
       loadTable: async () => {
         const res = await API('tables/1')
 
-        // {console.log(res.data)}
         await set(res.data)
         return res.data
       },
@@ -48,12 +44,6 @@ function createTableStore() {
         const res = await API(`tabless/1?name=${listName}`)
         console.log(res.data);
         await update((table) => res.data)
-        // console.log('change');
-        // update((table) => {
-        //   console.log(table);
-        //   table.name = listName
-        //   return table
-        // })
       },
       increment: () => update(n => n + 1),
       jan: () => {

@@ -1,10 +1,10 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
   import TableHeader from './TableHeader.svelte';
   import { TableStore } from '../stores/store.js';
+  export let tableId;
   let table;
-  export let id;
-  console.log('sing table'+id);
+
   let promise = TableStore.loadTable()
 
   onMount(()=> {
@@ -12,11 +12,11 @@
       table = value
     })
   })
-  function handleClick() {
-		promise = TableStore.loadTable();
-	}
 
-
+  beforeUpdate(() => {
+    // console.log('just updated');
+    promise = TableStore.loadTable();
+  });
 </script>
 
   <div class="flex flex-row flex-wrap bg-orange-100">
