@@ -45,13 +45,8 @@ function createTableStore() {
         console.log(res.data);
         await update((table) => res.data)
       },
-      increment: () => update(n => n + 1),
-      jan: () => {
-        console.log('jan');
-      },
-      decrement: () => update(n => n - 1),
       reset: () => set({})
     };
 }
 
-export const TableStore = createTableStore();
+export const tableStore = createTableStore();

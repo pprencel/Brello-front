@@ -1,21 +1,21 @@
 <script>
 	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
   import TableHeader from './TableHeader.svelte';
-  import { TableStore } from '../stores/store.js';
+  import { tableStore } from '../stores/tableStore.js';
   export let tableId;
   let table;
 
-  let promise = TableStore.loadTable()
+  let promise = tableStore.loadTable()
 
   onMount(()=> {
-    const unsubscribe = TableStore.subscribe(async (value) => {
+    const unsubscribe = tableStore.subscribe(async (value) => {
       table = value
     })
   })
 
   beforeUpdate(() => {
     // console.log('just updated');
-    promise = TableStore.loadTable();
+    promise = tableStore.loadTable();
   });
 </script>
 

@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { TableStore } from '../stores/store.js';
+  import { tableStore } from '../stores/tableStore.js';
 	export let tableName;
 	export let tableUsers;
   let editMode = false;
@@ -10,7 +10,7 @@
   let promise = testFunction()
 
   onMount(()=> {
-    const unsubscribe = TableStore.subscribe(async (value) => {
+    const unsubscribe = tableStore.subscribe(async (value) => {
       table = value
     })
     console.log(table.users);
@@ -18,7 +18,7 @@
 
   const handleNameChange = async () => {
     if(editedValue != table.name){
-      promise = TableStore.changeTableName(editedValue)
+      promise = tableStore.changeTableName(editedValue)
     }
     editMode = !editMode
   }
