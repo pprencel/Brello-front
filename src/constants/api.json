@@ -1,4 +1,4 @@
 {
-  "DEV": "https://shrouded-fjord-27358.herokuapp.com/?format=json",
-  "TEST": "http://localhost:3005/"
+  "TEST": "https://shrouded-fjord-27358.herokuapp.com/",
+  "TESTT": "http://localhost:3005/"
 }

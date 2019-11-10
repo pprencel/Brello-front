@@ -34,7 +34,7 @@ function createTableStore() {
     return {
       subscribe,
       loadTable: async () => {
-        const res = await API('tables/1')
+        const res = await API('tables/1/?format=json')
 
         await set(res.data)
         return res.data
