@@ -34,16 +34,21 @@ function createTablesStore() {
     return {
       subscribe,
       loadTables: async () => {
-        const res = await API('tables')
-
-
-        await set(mockTabsValues.tables)
-        return mockTabsValues.tables;
+        const res = await API('tables/?format=json')
+        res.data.forEach((obj) => {
+          obj.id = obj.url.match(/(\d+)/g)[1]
+        })
+        console.log(res.data);
+        await set(res.data)
+        // return mockTabsValues.tables;
       },
-      addTable: async () => {
-        const res = await API('tables')
-
-        await update(n => n.push(mockTabsValues.tables))
+      addTable: async (newTableName) => {
+        console.log(newTableName);
+        const res = await API.post('tables/', {
+          tableName: newTableName
+        })
+        console.log(newTableName);
+        // await update(n => n.push(mockTabsValues.tables))
 
       },
       reset: () => set({})

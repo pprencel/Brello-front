@@ -4,26 +4,24 @@
   import Test2 from "./components/Test2.svelte";
   import Table from "./components/Table.svelte";
   import TablesView from "./components/TablesView.svelte";
+  import NavBar from "./containers/NavBar.svelte";
   import { Router, Link, Route } from "svelte-routing";
   export let url = "";
-
 </script>
 
 <div id="main" class="bg-blue-100">
 
   <Router {url}>
-    <nav>
-      <Link to={`table/1`}>Table[1]</Link>
-      <Link to={`table/2`}>Table[2]</Link>
-      <Link to="tables">[Tables]</Link>
-    </nav>
+    <NavBar />
     <div>
       <Route path="tables" component={TablesView} />
       <Route path="table/:id" let:params>
-        <Table tableId="{params.id}"/>
+        <Table tableId={params.id} />
       </Route>
       <Route path="/" />
     </div>
   </Router>
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link
+    href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+    rel="stylesheet" />
 </div>

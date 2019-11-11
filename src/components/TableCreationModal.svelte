@@ -13,13 +13,14 @@
   }
 
   const handleSubmit = (e) => {
-    console.log('submited'+newTableName);
+    // console.log('submited'+newTableName);
     // console.log(newTableName);
     // console.log(newTableType);
     dispatch('newTable', {
       name: newTableName,
       type: newTableType
     });
+    dispatch('hideModal')
   }
 </script>
 

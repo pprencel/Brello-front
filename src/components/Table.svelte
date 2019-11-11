@@ -15,7 +15,7 @@
 
   beforeUpdate(() => {
     // console.log('just updated');
-    promise = tableStore.loadTable();
+    promise = tableStore.loadTable(tableId);
   });
 </script>
 

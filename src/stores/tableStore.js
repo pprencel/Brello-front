@@ -33,16 +33,27 @@ function createTableStore() {
 
     return {
       subscribe,
-      loadTable: async () => {
-        const res = await API('tables/1/?format=json')
-
-        await set(res.data)
-        return res.data
+      loadTable: async (tableId) => {
+        if(tableId){
+          console.log(`tables/${tableId}/?format=json`);
+          const res = await API(`tables/${tableId}/?format=json`)
+          res.data.id = res.data.url.match(/(\d+)/g)[1]
+          res.data.users = []
+          res.data.lists = mockTabValues.lists
+          await set(res.data)
+          return res.data
+        }else {
+          console.log('empty');
+          await set(mockTabValues)
+        }
       },
-      changeTableName: async (listName) => {
-        console.log('changeTableName');
-        const res = await API(`tabless/1?name=${listName}`)
-        console.log(res.data);
+      changeTableName: async (tableId, newTableName) => {
+        const res = await API.put(`tables/${tableId}/`, {
+          tableName: newTableName
+        })
+        res.data.id = res.data.url.match(/(\d+)/g)[1]
+        res.data.users = []
+        res.data.lists = mockTabValues.lists
         await update((table) => res.data)
       },
       reset: () => set({})

@@ -4,7 +4,7 @@
 	export let tableName;
 	export let tableUsers;
   let editMode = false;
-  let editedValue = tableName;
+  let editedValue;
   let table;
   const testFunction = async () => {}
   let promise = testFunction()
@@ -12,13 +12,15 @@
   onMount(()=> {
     const unsubscribe = tableStore.subscribe(async (value) => {
       table = value
+      editedValue = tableName
     })
-    console.log(table.users);
+    // console.log(table.users);
   })
 
   const handleNameChange = async () => {
     if(editedValue != table.name){
-      promise = tableStore.changeTableName(editedValue)
+      promise = tableStore.changeTableName(table.id, editedValue)
+      // promise = tableStore.loadTable(table.id)
     }
     editMode = !editMode
   }
@@ -37,7 +39,7 @@
     {:then}
       {#if !editMode}
         <div on:click={handleNameChange}>
-          {`${table.name}`}
+          {`${table.tableName}`}
         </div>
       {:else}
         <div>
@@ -54,7 +56,7 @@
 
 
   <div>
-    USERS
+    USERS:
   </div>
   {#await promise}
     <p>loading...</p>
