@@ -5,11 +5,13 @@
   import Table from "./components/Table.svelte";
   import TablesView from "./components/TablesView.svelte";
   import NavBar from "./containers/NavBar.svelte";
+  import HomePage from "./containers/HomePage.svelte";
+  import NotFound from "./containers/NotFound.svelte";
   import { Router, Link, Route } from "svelte-routing";
   export let url = "";
 </script>
 
-<div id="main" class="bg-blue-100">
+<div id="main">
 
   <Router {url}>
     <NavBar />
@@ -18,10 +20,14 @@
       <Route path="table/:id" let:params>
         <Table tableId={params.id} />
       </Route>
-      <Route path="/" />
+      <Route path="/" component={HomePage}/>
+      <Route path="*" let:params>
+        <NotFound params={params}/>
+      </Route>
     </div>
   </Router>
   <link
     href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-    rel="stylesheet" />
+    rel="stylesheet"
+  />
 </div>

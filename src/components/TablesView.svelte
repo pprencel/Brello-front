@@ -33,7 +33,7 @@
     return ''
   }
 </script>
-<div class="flex flex-wrap bg-red-400 w-full p-6">
+<div class="flex flex-wrap bg-indigo-100 w-full p-6">
   <div class="text-2xl font-bold p-4">
     Yours Tables
   </div>
@@ -43,13 +43,13 @@
       <p>loading...</p>
     {:then}
       {#each tables as table}
-        <a href={`table/${table.id}`} use:link class="bg-red-500 p-8 m-4 w-1/4 border-4 truncate">
+        <a href={`table/${table.id}`} use:link class="bg-indigo-300 p-8 m-4 w-1/4 border-4 border-indigo-200 truncate">
           <div>
             {table.tableName}
           </div>
         </a>
       {/each}
-      <button on:click={() => visibleModal = true} class="bg-red-600 p-8 m-4 w-1/4 border-4 truncate">
+      <button on:click={() => visibleModal = true} class="bg-indigo-400 p-8 m-4 w-1/4 border-4 border-indigo-100 truncate">
           +
       </button>
 

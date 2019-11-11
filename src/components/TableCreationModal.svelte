@@ -25,7 +25,7 @@
 </script>
 
 {#if visible}
-  <div id="bgClose" class="shadowed-bg min-h-full flex flex-col items-center z-10 absolute left-0 top-0 w-full" on:click={hideModal}>
+  <div id="bgClose" class="shadowed-bg flex flex-col items-center z-10 absolute left-0 top-0 w-full" style="height: 1000px" on:click={hideModal}>
       <div class="w-1/3 bg-gray-400 m-24 p-4 relative ">
         <button class="w-100 float-right font-bold" id="btnClose">x</button>
         <form class="top-auto w-100" on:submit|preventDefault={handleSubmit}>
