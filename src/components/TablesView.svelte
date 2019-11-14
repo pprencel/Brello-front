@@ -31,8 +31,8 @@
     return ''
   }
 </script>
-<div class="flex flex-wrap bg-indigo-100 w-full py-6 text-white">
-  <div class="w-full bg-indigo-400 text-2xl font-bold p-4">
+<div class="flex flex-wrap bg-indigo-100 w-full py-6 pt-0 text-white">
+  <div class="w-full bg-indigo-400 text-2xl font-bold p-4 mb-2">
     Yours Tables
   </div>
 

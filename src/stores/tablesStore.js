@@ -42,7 +42,8 @@ function createTablesStore() {
       addTable: async (newTableName) => {
         console.log(newTableName);
         const res = await API.post('tables/', {
-          tableName: newTableName
+          tableName: newTableName,
+          lists: []
         })
         console.log(newTableName);
         // await update(n => n.push(mockTabsValues.tables))

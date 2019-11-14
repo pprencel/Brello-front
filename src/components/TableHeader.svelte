@@ -5,6 +5,7 @@
 	export let tableUsers;
   let editMode = false;
   let editedValue;
+  console.log(tableName);
   let table;
   const testFunction = async () => {}
   let promise = testFunction()
@@ -44,7 +45,12 @@
         </div>
       {:else}
         <div>
-          <input class="bg-indigo-300 py-1 font-bold" bind:value={editedValue} on:blur={handleNameChange} autofocus/>
+          <input
+            class="bg-indigo-300 py-1 font-bold w-2/3"
+            bind:value={editedValue}
+            on:blur={handleNameChange}
+            placeholder={table.tableName}
+            autofocus/>
         </div>
       {/if}
     {:catch error}
@@ -73,3 +79,9 @@
   </div>
 
 </div>
+
+<style>
+::placeholder {
+  color: #3c366b;
+}
+</style>
