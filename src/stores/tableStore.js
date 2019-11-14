@@ -42,7 +42,7 @@ function createTableStore() {
           return res.data
         }else {
           console.log('empty');
-          await set(mockTabValues)
+          // await set(mockTabValues)
         }
       },
       changeTableName: async (tableId, newTableName) => {

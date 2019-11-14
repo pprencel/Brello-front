@@ -14,10 +14,8 @@
   })
 
   const handleAddTable = async (props) => {
-    // console.log(props.detail.name);
     promise = tablesStore.addTable(props.detail.name)
     promise = tablesStore.loadTables()
-    // visibleModal = !visibleModal;
   }
 
   beforeUpdate(() => {
@@ -33,8 +31,8 @@
     return ''
   }
 </script>
-<div class="flex flex-wrap bg-indigo-100 w-full p-6">
-  <div class="text-2xl font-bold p-4">
+<div class="flex flex-wrap bg-indigo-100 w-full py-6 text-white">
+  <div class="w-full bg-indigo-400 text-2xl font-bold p-4">
     Yours Tables
   </div>
 

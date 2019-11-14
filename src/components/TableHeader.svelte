@@ -38,9 +38,9 @@
       {#if !editMode}
         <div
           on:click={handleNameChange}
-          class="text-white text-2xl"
+          class="text-white text-2xl truncate"
         >
-          {`${table.tableName}`}
+          {table.tableName}
         </div>
       {:else}
         <div>
@@ -56,7 +56,7 @@
       </div>
     {/await}
   </div>
-  <div class="flex flex-row ">
+  <div class="flex flex-row ml-4">
 
     {#await promise}
       <p>loading...</p>

@@ -13,9 +13,6 @@
   }
 
   const handleSubmit = (e) => {
-    // console.log('submited'+newTableName);
-    // console.log(newTableName);
-    // console.log(newTableType);
     dispatch('newTable', {
       name: newTableName,
       type: newTableType
@@ -26,15 +23,15 @@
 
 {#if visible}
   <div id="bgClose" class="shadowed-bg flex flex-col items-center z-10 absolute left-0 top-0 w-full" style="height: 1000px" on:click={hideModal}>
-      <div class="w-1/3 bg-gray-400 m-24 p-4 relative ">
+      <div class="w-1/3 bg-indigo-400 m-24 p-4 relative ">
         <button class="w-100 float-right font-bold" id="btnClose">x</button>
         <form class="top-auto w-100" on:submit|preventDefault={handleSubmit}>
           <label class="text-xl font-bold">
             New table name:
           </label>
-          <input bind:value={newTableName} class="p-2 my-2" type="text" placeholder="name..." required minlength="3"/>
+          <input bind:value={newTableName} class="p-2 my-2 text-indigo-700" type="text" placeholder="name..." required minlength="3"/>
           <div class="my-2">
-            <input class="mt-2 pt-1 mr-1" type="radio" bind:group={newTableType} value="public" checked> Public<br>
+            <input class="mt-2 pt-1 mr-1 text-indigo-800" type="radio" bind:group={newTableType} value="public" checked> Public<br>
             <input class="mt-2 pt-1 mr-1" type="radio" bind:group={newTableType} value="private"> Private<br>
           </div>
           <button class="float-right p-2 mt-2 border border-gray-500" type="submit">Create Table </button>
