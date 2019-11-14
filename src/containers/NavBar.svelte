@@ -15,9 +15,9 @@
     <div class="ml-4 text-xl">
       <Link to="tables">Tables</Link>
     </div>
-    <div class="ml-4 text-xl text-red-600">
+    <!-- <div class="ml-4 text-xl text-red-600">
       <Link to={`table/1`}>Table[1]</Link>
-    </div>
+    </div> -->
   </div>
 
   <Link to="">

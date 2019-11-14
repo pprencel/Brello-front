@@ -15,7 +15,7 @@
 
   const handleAddTable = async (props) => {
     promise = tablesStore.addTable(props.detail.name)
-    promise = tablesStore.loadTables()
+    // promise = tablesStore.loadTables()
   }
 
   beforeUpdate(() => {
