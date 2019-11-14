@@ -37,9 +37,7 @@ function createTableStore() {
         if(tableId){
           console.log(`tables/${tableId}/?format=json`);
           const res = await API(`tables/${tableId}/?format=json`)
-          res.data.id = res.data.url.match(/(\d+)/g)[1]
-          res.data.users = []
-          res.data.lists = mockTabValues.lists
+          res.data.users = ["KP", "AZ"],
           await set(res.data)
           return res.data
         }else {
@@ -48,12 +46,13 @@ function createTableStore() {
         }
       },
       changeTableName: async (tableId, newTableName) => {
+        console.log(tableId);
+        console.log(newTableName);
         const res = await API.put(`tables/${tableId}/`, {
-          tableName: newTableName
+          tableName: newTableName,
+          lists: []
         })
-        res.data.id = res.data.url.match(/(\d+)/g)[1]
-        res.data.users = []
-        res.data.lists = mockTabValues.lists
+        res.data.users = ["KP", "AZ"],
         await update((table) => res.data)
       },
       reset: () => set({})

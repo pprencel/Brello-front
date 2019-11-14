@@ -35,9 +35,6 @@ function createTablesStore() {
       subscribe,
       loadTables: async () => {
         const res = await API('tables/?format=json')
-        res.data.forEach((obj) => {
-          obj.id = obj.url.match(/(\d+)/g)[1]
-        })
         console.log(res.data);
         await set(res.data)
         // return mockTabsValues.tables;

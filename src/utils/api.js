@@ -3,7 +3,7 @@ import api from '../constants/api'
 
 // const tmpToken = 'v6VdyELtR1ip5qiNGW9jLojW';
 const axiosInstance = axios.create({
-  baseURL: api.TEST,
+  baseURL: api.DEV,
   headers: {
     // TOKEN: tmpToken,
   }

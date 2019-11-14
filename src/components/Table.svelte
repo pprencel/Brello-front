@@ -1,6 +1,7 @@
 <script>
 	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
   import TableHeader from './TableHeader.svelte';
+  import TableLists from './TableLists.svelte';
   import { tableStore } from '../stores/tableStore.js';
   export let tableId;
   let table;
@@ -14,20 +15,17 @@
   })
 
   beforeUpdate(() => {
-    // console.log('just updated');
     promise = tableStore.loadTable(tableId);
   });
 </script>
 
-  <div class="flex flex-row flex-wrap bg-orange-100">
-
-    <h1 class="w-full"> \\ Table component \\ </h1>
-    <!-- <button on:click={resp.changeTableName} bind:value={text}> iks </button> -->
+  <div class="flex flex-row flex-wrap">
 
     {#await promise}
     	<p>...loading your table</p>
     {:then table}
         <TableHeader tableName={table.name} tableUsers={table.users}/>
+				<TableLists lists={table.lists}/>
     {:catch error}
     	<p style="color: red">{error.message}</p>
     {/await}
