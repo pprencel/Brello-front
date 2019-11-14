@@ -45,7 +45,7 @@ function createTablesStore() {
           tableName: newTableName,
           lists: []
         })
-        console.log(newTableName);
+        // console.log(newTableName);
         // await update(n => n.push(mockTabsValues.tables))
 
       },
