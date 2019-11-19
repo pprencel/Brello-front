@@ -1,6 +1,6 @@
 <script>
   import { userStore } from '../stores/userStore.js';
-  let promise = 
+  // let promise = 
   let url = "asda"
 
  const handleSubmit = (e) => {
