@@ -2,12 +2,15 @@
   import { onMount, beforeUpdate, afterUpdate } from 'svelte';
   import { tablesStore } from '../stores/tablesStore.js';
   import TableCreationModal from "./TableCreationModal.svelte";
+  import Loader from "./common/Loader.svelte";
+  import auth from "../utils/auth.js";
   import { link } from "svelte-routing";
   let tables;
   const testFunction = async () => {}
   let promise = tablesStore.loadTables()
   let visibleModal = false;
   onMount(()=> {
+    // auth();
     const unsubscribe = tablesStore.subscribe(async (value) => {
       tables = value
     })
@@ -31,6 +34,7 @@
     return ''
   }
 </script>
+<auth/>
 <div class="flex flex-wrap bg-indigo-100 w-full py-6 pt-0 text-white">
   <div class="w-full bg-indigo-400 text-2xl font-bold p-4 mb-2">
     Yours Tables
@@ -38,7 +42,7 @@
 
   <div class="w-full flex flex-row flex-wrap justify-between w-full tables-grid">
     {#await promise}
-      <p>loading...</p>
+      <Loader />
     {:then}
       {#each tables as table}
         <a href={`table/${table.id}`} use:link class="bg-indigo-300 p-8 m-4 w-1/4 border-4 border-indigo-200 truncate">

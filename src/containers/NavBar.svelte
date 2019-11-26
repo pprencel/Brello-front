@@ -35,7 +35,10 @@
       <img class="h-6" src={notification}/>
     </button>
     <button class="mx-2 p-1 text-gray-200 text-xl bg-indigo-400 border-indigo-400 border rounded-full">
-      <span> toja </span>
+      <Link to="/signin"> l </Link>
+    </button>
+    <button class="mx-2 p-1 text-gray-200 text-xl bg-indigo-400 border-indigo-400 border rounded-full">
+    <Link to="/signup"> r </Link>
     </button>
   </div>
 
