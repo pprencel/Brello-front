@@ -1,17 +1,15 @@
 import axios from 'axios';
 import api from '../constants/api'
 import { userStore } from '../stores/userStore.js';
-
+import { popupStore } from '../stores/popupStore.js';
 let authToken;
-let token;
+
 const unsubscribe = userStore.subscribe(async (value) => {
   authToken = value.token
 })
-// const tmpToken = 'v6VdyELtR1ip5qiNGW9jLojW';
 const axiosInstance = axios.create({
   baseURL: api.DEV,
   headers: {
-    // Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTc0NzczMTIxLCJqdGkiOiI1NzViNDZlMzZiNTI0NTA3YWIxNzAyZjFmMGNjZjYwNiIsInVzZXJfaWQiOjF9.78fq8gV9IigsNs3Qt1RgktdN8gB7n9Z3fUwmd2em2F8`
     Authorization: `Bearer ${authToken}`
   }
 });
@@ -22,6 +20,8 @@ axiosInstance.interceptors.request.use(
     if (config.baseURL === api.DEV) {
       if (authToken) {
         config.headers.Authorization = `Bearer ${authToken}`;
+      }else {
+        config.headers.Authorization = ``;
       }
     }
     return config;
@@ -34,10 +34,17 @@ axiosInstance.interceptors.response.use(
   response => response,
   error => {
     console.log(error);
+    // console.log(error.response)
+    // console.log(error.response.status);
+    // console.log('KURWAs');
 
     if (error.response.status === 401) {
       const path = window.location.pathname;
-      if(!token && path !== '/unauthorized'){
+      if(path  === '/signin'){
+        console.log('prevent redirect');
+        console.log(error.response);
+        popupStore.msg(error.response.data.detail, "error")
+      }else if(path !== '/unauthorized'){
         console.log('redirect');
         window.location.href = '/unauthorized'
       }

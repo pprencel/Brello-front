@@ -25,7 +25,7 @@
     	<p>...loading your table</p>
     {:then table}
         <TableHeader tableName={table.name} tableUsers={table.users}/>
-			  <div class="flex flex-row pb-64 text-white pt-2 overflow-x-scroll whitespace-no-wrap">
+			  <div class="flex flex-row pb-64 text-white pt-2 overflow-x-scroll whitespace-no-wrap w-full">
 					{#each table.lists as list}
 						<List list={list}/>
 					{/each}

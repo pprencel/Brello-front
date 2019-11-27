@@ -8,41 +8,15 @@
   import SignUp from "./containers/SignUp.svelte";
   import SignIn from "./containers/SignIn.svelte";
   import Unauthorized from "./containers/Unauthorized.svelte";
+  import Popup from "./components/common/Popup.svelte";
   import { Router, Link, Route } from "svelte-routing";
   export let url = "";
-  let user;
-  let x = false;
-  // onMount(()=> {
-  //   const unsubscribe = userStore.subscribe(async (value) => {
-  //     console.log('mount', value);
-  //     user = value
-  //     // console.log(value);
-  //   })
-  //   console.log(user);
-  //   // console.log(userStore.token);
-  // })
-  beforeUpdate(()=> {
-    console.log('update');
-  })
-
-  const unauthorizedRedirect = () => {
-
-    // console.log('iks');
-  }
-
-  // {console.log(document)}
-  // {#if user && user.token}
-  //   <div> good </div>
-  // {:else}
-  //   {unauthorizedRedirect()}
-  //   <!-- <Link to="/unauthorized">...</Link> -->
-  // {/if}
 </script>
 
 <div id="main">
 
   <Router {url}>
-
+    <Popup/>
     <NavBar />
     <div>
       <Route path="/unauthorized" component={Unauthorized} />
