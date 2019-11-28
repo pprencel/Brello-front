@@ -5,20 +5,16 @@ let mockTabsValues = {
   tables: [
     {
       id: 1,
-      name: 'NAZWA TABLICY_1'
+      tableName: 'NAZWA TABLICY_1'
     },
     {
       id: 2,
-      name: 'NAZWA TABLICY _2'
+      tableName: 'NAZWA TABLICY _2'
     },
     {
       id: 3,
-      name: 'NAZWA TABLICY_3'
+      tableName: 'NAZWA TABLICY_3'
     },
-    // {
-    //   id: 4,
-    //   name: 'NAZWA TABLICY 4'
-    // }
   ]
 }
 
@@ -35,9 +31,9 @@ function createTablesStore() {
       subscribe,
       loadTables: async () => {
         const res = await API('tables/?format=json')
-        console.log(res.data);
         await set(res.data)
-        // return mockTabsValues.tables;
+        return res.data;
+        // set(mockTabsValues.tables)
       },
       addTable: async (newTableName) => {
         console.log(newTableName);

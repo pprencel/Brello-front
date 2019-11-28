@@ -1,9 +1,20 @@
 import { writable } from 'svelte/store';
 import API from '../utils/api';
 
+let cartArr = [{
+  id: 1,
+  name: 'fajna',
+  description: 'some desc'
+},
+{
+  id: 2,
+  name: 'Card!!! ',
+  description: 'some desc'
+}]
+
 let mockTabValues = {
   id: 1,
-  name: 'NAZWA_TABLICY__NIE',
+  tableName: 'nie fajna',
   users: [
     "K",
     "A",
@@ -12,12 +23,16 @@ let mockTabValues = {
     {
       id: 1,
       name: "Feature",
-      tasks: []
+      cards: cartArr
     },
     {
       id: 2,
       name: "Done",
-      tasks: []
+      cards: [{
+        id: 4,
+        name: 'single card name',
+        description: 'some desc'
+      },]
     },
   ]
 }
@@ -36,10 +51,19 @@ function createTableStore() {
       loadTable: async (tableId) => {
         if(tableId){
           console.log(`tables/${tableId}/?format=json`);
-          const res = await API(`tables/${tableId}/?format=json`)
-          res.data.users = ["KP", "AZ"],
-          await set(res.data)
-          return res.data
+          // const res = await API(`tables/${tableId}/?format=json`)
+          // res.data.users = ["KP", "AZ"],
+          // res.data.lists = JSON.parse(res.data.lists)
+          // for await(const list of res.data.lists){
+          //
+          // }
+          // res.data.
+          // console.log(res.data);
+          //
+          // await set(res.data)
+          // return res.data
+          await set(mockTabValues)
+          return mockTabValues
         }else {
           console.log('empty');
           // await set(mockTabValues)

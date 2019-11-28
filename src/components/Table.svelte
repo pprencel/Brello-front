@@ -3,6 +3,9 @@
   import TableHeader from './TableHeader.svelte';
   import List from './List.svelte';
   import { tableStore } from '../stores/tableStore.js';
+	import Loader from "./common/Loader.svelte";
+	import CardModal from "./CardModal.svelte";
+
   export let tableId;
   let table;
 
@@ -19,21 +22,27 @@
   });
 </script>
 
-  <div class="flex flex-row flex-wrap">
+  <div class=" flex flex-row flex-wrap">
 
     {#await promise}
-    	<p>...loading your table</p>
+			<Loader />
     {:then table}
         <TableHeader tableName={table.name} tableUsers={table.users}/>
-			  <div class="flex flex-row pb-64 text-white pt-2 overflow-x-scroll whitespace-no-wrap w-full">
-					{#each table.lists as list}
-						<List list={list}/>
-					{/each}
+				<div class="h-screen w-full overflow-x-scroll whitespace-no-wrap">
+				  <div class="flex flex-row text-white pt-2 pb-10 ">
+						{#each table.lists as list}
+							<List list={list}/>
+						{/each}
+					</div>
 				</div>
+				<CardModal/>
     {:catch error}
     	<p style="color: red">{error.message}</p>
     {/await}
   </div>
-<style>
 
+<style>
+.list-container {
+	height: 500px;
+}
 </style>

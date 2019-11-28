@@ -45,10 +45,10 @@
         <img class="h-6" src={add}/>
       </button>
       <button class="mx-1 p-1 bg-indigo-400 border-indigo-400 border rounded-lg">
-        <img class="h-6" src={information}/>
-      </button>
-      <button class="mx-1 p-1 bg-indigo-400 border-indigo-400 border rounded-lg">
         <img class="h-6" src={notification}/>
+      </button>
+      <button class="mx-1 p-1 bg-indigo-400 border-indigo-400 border rounded-full" title={user.username}>
+        {user.username.substr(0, 2).toUpperCase()}
       </button>
       <button
         on:click={signOut}
