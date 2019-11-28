@@ -44,6 +44,7 @@ function createUsersStore() {
           setTimeout(() => {
             window.location.href = "/signin"
           }, 1500)
+          return true
         }
       },
       signin: async (formValues) => {
@@ -69,6 +70,7 @@ function createUsersStore() {
             window.location.href = "/"
           }, 1500)
         }
+        return true
       },
       signout: async () => {
         localStorage.removeItem('authToken')

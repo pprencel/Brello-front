@@ -8,7 +8,7 @@ let init = {
       description: 'and this is card description bla bla bla, bla bla',
       listName: 'nie fajna'
   },
-  visible: true
+  visible: false
 }
 
 function createCardStore() {

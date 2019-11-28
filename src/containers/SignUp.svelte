@@ -1,26 +1,35 @@
 <script>
   import { userStore } from '../stores/userStore.js';
-  // let promise =
+  import Loader from "../components/common/Loader.svelte";
+  let promise
   let url = "asda"
   let res = null
 
   const handleSubmit = async (e) => {
-   await userStore.signup(e.target);
+   promise = userStore.signup(e.target);
   }
 </script>
-<div class="flex flex-col justify-center items-center text-xl m-10">
-  <form on:submit|preventDefault="{handleSubmit}" class="bg-indigo-500 p-4" style="width: 300px" autocomplete="off">
-    <label class="block w-full mt-2 text-white" for="email">Email</label>
-    <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="email" autocomplete="false">
-    <label class="block w-full mt-3 text-white" for="login">Login</label>
-    <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="login" autocomplete="false">
-    <label class="block w-full mt-3 text-white" for="email">Password</label>
-    <input class="block w-full mt-1 p-1 text-gray-800" type="password" id="password" autocomplete="false">
-    <label class="block w-full mt-3 text-white" for="email">Password confirmation</label>
-    <input class="block w-full mt-1 p-1 text-gray-800" type="password" id="password_confirm" autocomplete="false">
-    <button class="block border block w-3/4 mx-auto mt-5 border-white text-white font-bold px-6 py-2" type="submit">Create account</button>
-  </form>
-</div>
+
+{#await promise}
+  <Loader />
+{:then v}
+  <div class="flex flex-col justify-center items-center text-xl m-10">
+    <form on:submit|preventDefault="{handleSubmit}" class="bg-indigo-500 p-4" style="width: 300px" autocomplete="off">
+      <label class="block w-full mt-2 text-white" for="email">Email</label>
+      <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="email" autocomplete="false">
+      <label class="block w-full mt-3 text-white" for="login">Login</label>
+      <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="login" autocomplete="false">
+      <label class="block w-full mt-3 text-white" for="email">Password</label>
+      <input class="block w-full mt-1 p-1 text-gray-800" type="password" id="password" autocomplete="false">
+      <label class="block w-full mt-3 text-white" for="email">Password confirmation</label>
+      <input class="block w-full mt-1 p-1 text-gray-800" type="password" id="password_confirm" autocomplete="false">
+      <button class="block border block w-3/4 mx-auto mt-5 border-white text-white font-bold px-6 py-2" type="submit">Create account</button>
+    </form>
+  </div>
+{:catch error}
+  <p style="color: red">{error.message}</p>
+{/await}
+
 
 <!-- <div class="flex flex-col justify-center items-center text-xl m-10">
   <form on:submit|preventDefault="{handleSubmit}" class="bg-indigo-400 p-4" style="width: 300px">
