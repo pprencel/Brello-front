@@ -13,12 +13,10 @@
   export let url = "";
 </script>
 
-<div id="main">
-
+<div id="main" class="">
   <Router {url}>
     <Popup/>
     <NavBar />
-    <div>
       <Route path="/unauthorized" component={Unauthorized} />
       <Route path="tables" component={TablesView} />
       <Route path="table/:id" let:params>
@@ -30,6 +28,5 @@
       <Route path="*" let:params>
         <NotFound params={params}/>
       </Route>
-    </div>
   </Router>
 </div>

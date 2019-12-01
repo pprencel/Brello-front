@@ -20,9 +20,9 @@
 </script>
 
 
-  <div class="w-1/4 m-2 bg-indigo-300 border-indigo-500 border rounded-sm ">
+  <div class="w-1/4 m-2 bg-indigo-300 border-indigo-500 border rounded-sm">
     <div class="flex flex-row flex-no-wrap w-full border-b border-indigo-500">
-      <p class="w-4/5 p-2 font-bold truncate"> {list.name} </p>
+      <p class="w-4/5 p-2 font-bold truncate"> {list.listName} </p>
       <button class="w-1/5 pl-4 pb-2 float-right">
         ...
       </button>
@@ -34,7 +34,7 @@
 					value={card.id}
 					on:click|preventDefault={openCardModal}
 				>
-					{card.name}
+					{card.cardName}
 				</button>
 			{/each}
 
@@ -68,9 +68,4 @@
   </div>
 
 <style>
-.test {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */
-}
 </style>

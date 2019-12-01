@@ -43,9 +43,9 @@
               <img src={userIcon}/>
             </div>
             <div class="w-11/12 ml-2">
-              <p class="font-bold text-2xl"> {store.card.name} </p>
+              <p class="font-bold text-2xl"> {store.card.cardName} </p>
               <p class="font-bold">
-                in list <a class="underline">{store.card.name}</a>
+                in list <a class="underline">{store.card.listName}</a>
               </p>
               <div class="flex flex-row mt-8 text-xs">
                 <div class="mr-8">
@@ -89,7 +89,7 @@
               <p class="font-bold text-2xl inline-block"> Activity </p>
               <div class="w-full mt-4 mr-4">
                 <button class="mr-2 bg-indigo-300 px-3 py-1 rounded-full"> D </button>
-                <input class="px-4 py-2 w-4/5 text-gray-800 bg-indigo-100" placeholder="Write a commnet"/> 
+                <input class="px-4 py-2 w-4/5 text-gray-800 bg-indigo-100" placeholder="Write a commnet"/>
               </div>
             </div>
           </div>

@@ -16,12 +16,15 @@ function createCardStore() {
 
     return {
       subscribe,
-      openCard: async (id) => {
+      openCard: async (cardId) => {
+        const res = await API(`cards/${cardId}/?format=json`)
+
         update(v => {
           v.visible = true
-          v.card = init.card
+          v.card = res.data
           return v
         })
+        return true
       },
       addCard: async (newCardName) => {
         console.log('API call', newCardName);

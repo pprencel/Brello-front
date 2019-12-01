@@ -34,6 +34,26 @@ let mockTabValues = {
         description: 'some desc'
       },]
     },
+    {
+      id: 3,
+      name: "Done 1",
+      cards: cartArr
+    },
+    {
+      id: 4,
+      name: "Done 2",
+      cards: cartArr
+    },
+    {
+      id: 5,
+      name: "Done 3",
+      cards: cartArr
+    },
+    {
+      id: 6,
+      name: "Done 4",
+      cards: cartArr
+    },
   ]
 }
 let mockEmptyTabValues = {
@@ -51,19 +71,15 @@ function createTableStore() {
       loadTable: async (tableId) => {
         if(tableId){
           console.log(`tables/${tableId}/?format=json`);
-          // const res = await API(`tables/${tableId}/?format=json`)
-          // res.data.users = ["KP", "AZ"],
-          // res.data.lists = JSON.parse(res.data.lists)
-          // for await(const list of res.data.lists){
-          //
-          // }
-          // res.data.
-          // console.log(res.data);
-          //
-          // await set(res.data)
-          // return res.data
-          await set(mockTabValues)
-          return mockTabValues
+          const res = await API(`tables/${tableId}/?format=json`)
+          res.data.users = ["KP", "AZ"],
+
+          console.log(res.data);
+
+          await set(res.data)
+          return res.data
+          // await set(mockTabValues)
+          // return mockTabValues
         }else {
           console.log('empty');
           // await set(mockTabValues)

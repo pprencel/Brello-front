@@ -11,6 +11,8 @@
 
   let promise = tableStore.loadTable()
 
+	// Propably solution for fixed height of
+	// window.screen.height - document.getElementsByClassName('test')[0].offsetTop
   onMount(()=> {
     const unsubscribe = tableStore.subscribe(async (value) => {
       table = value
@@ -22,18 +24,17 @@
   });
 </script>
 
-  <div class=" flex flex-row flex-wrap">
+  <div class="flex flex-row flex-wrap">
 
     {#await promise}
 			<Loader />
     {:then table}
         <TableHeader tableName={table.name} tableUsers={table.users}/>
-				<div class="h-screen w-full overflow-x-scroll whitespace-no-wrap">
-				  <div class="flex flex-row text-white pt-2 pb-10 ">
-						{#each table.lists as list}
+				<div class="lock-height flex flex-col flex-wrap overflow-x-auto text-white mt-8 w-full">
+					{#each table.lists as list}
 							<List list={list}/>
-						{/each}
-					</div>
+							<div class="break-column"></div>
+					{/each}
 				</div>
 				<CardModal/>
     {:catch error}
@@ -42,7 +43,13 @@
   </div>
 
 <style>
-.list-container {
-	height: 500px;
+
+.lock-height {
+	height:  80.5vh;
+}
+
+.break-column {
+  flex-basis: 100%;
+  width: 0;
 }
 </style>
