@@ -30,7 +30,7 @@
 		<div class="flex flex-col w-full items-center">
 			{#each list.cards as card}
 				<button
-					class="p-2 my-2 bg-indigo-200 w-11/12"
+					class="p-2 my-2 bg-indigo-200 text-left w-11/12"
 					value={card.id}
 					on:click|preventDefault={openCardModal}
 				>
