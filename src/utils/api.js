@@ -4,7 +4,7 @@ import { userStore } from '../stores/userStore.js';
 import { popupStore } from '../stores/popupStore.js';
 let authToken;
 
-const unsubscribe = userStore.subscribe(async (value) => {
+userStore.subscribe(async (value) => {
   authToken = value.token
 })
 const axiosInstance = axios.create({

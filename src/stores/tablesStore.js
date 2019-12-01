@@ -18,12 +18,6 @@ let mockTabsValues = {
   ]
 }
 
-const newTableValue =
-{
-  id: 4,
-  name: 'NAZWA TABLICY 4'
-}
-
 function createTablesStore() {
     const { subscribe, set, update } = writable(mockTabsValues.tables);
 
@@ -37,13 +31,10 @@ function createTablesStore() {
       },
       addTable: async (newTableName) => {
         console.log(newTableName);
-        const res = await API.post('tables/', {
+        await API.post('tables/', {
           tableName: newTableName,
           lists: []
         })
-        // console.log(newTableName);
-        // await update(n => n.push(mockTabsValues.tables))
-
       },
       reset: () => set({})
     };

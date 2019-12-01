@@ -3,27 +3,22 @@
   import { tablesStore } from '../stores/tablesStore.js';
   import TableCreationModal from "./TableCreationModal.svelte";
   import Loader from "./common/Loader.svelte";
-  import auth from "../utils/auth.js";
   import { link } from "svelte-routing";
   let tables;
   const testFunction = async () => {}
   let promise = tablesStore.loadTables()
   let visibleModal = false;
+
   onMount(()=> {
-    // auth();
     const unsubscribe = tablesStore.subscribe(async (value) => {
       tables = value
     })
   })
 
   const handleAddTable = async (props) => {
-    promise = tablesStore.addTable(props.detail.name)
+    promise = await tablesStore.addTable(props.detail.name)
     promise = tablesStore.loadTables()
   }
-
-  beforeUpdate(() => {
-    // promise = tablesStore.loadTables();
-  });
 
   const handleModalClose = (e) => {
     visibleModal = false;

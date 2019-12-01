@@ -5,7 +5,7 @@
     "test": "jest",
     "start": "parcel index.html",
     "build": "npm run lint && npx prettier --write --plugin-search-dir=. ./**/*.svelte && parcel build --no-source-maps index.html",
-    "lint": "eslint --cache --ext .js src/",
+    "lint": "eslint --cache src/",
     "lint:fix": "eslint --cache --ext .js --fix --rule --rule \"no-debugger: 0\" src/"
   },
   "dependencies": {
@@ -18,9 +18,7 @@
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
-    "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
-    "eslint-plugin-svelte3": "^2.7.3",
     "jest": "^24.9.0",
     "jest-transform-svelte": "^2.1.0",
     "jwt-decode": "^2.2.0",
@@ -34,5 +32,9 @@
     "svelte-preprocess": "^3.1.1",
     "svelte-router": "^3.0.0-alpha.2",
     "svelte-routing": "^1.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-plugin-svelte3": "^2.7.3"
   }
 }

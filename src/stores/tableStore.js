@@ -76,7 +76,7 @@ function createTableStore() {
 
           console.log(res.data);
 
-          await set(res.data)
+          set(res.data)
           return res.data
           // await set(mockTabValues)
           // return mockTabValues
@@ -93,7 +93,7 @@ function createTableStore() {
           lists: []
         })
         res.data.users = ["KP", "AZ"],
-        await update((table) => res.data)
+        set(res.data)
       },
       reset: () => set({})
     };
