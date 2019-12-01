@@ -4,7 +4,7 @@
   "scripts": {
     "test": "jest",
     "start": "parcel index.html",
-    "build": "npm run lint && npx prettier --write --plugin-search-dir=. ./**/*.svelte && parcel build --no-source-maps index.html",
+    "build": "npx prettier --write --plugin-search-dir=. ./**/*.svelte && parcel build --no-source-maps index.html",
     "lint": "eslint --cache src/",
     "lint:fix": "eslint --cache --ext .js --fix --rule --rule \"no-debugger: 0\" src/"
   },
