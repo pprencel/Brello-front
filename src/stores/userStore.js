@@ -30,15 +30,23 @@ function createUsersStore() {
           return v;
         })
         const res = await API.post('register/', {
-          mail: formValues.email.value,
-          login: formValues.login.value,
+          email: formValues.email.value,
+          username: formValues.username.value,
           password: formValues.password.value,
           password_confirm: formValues.password_confirm.value,
         })
-
-        if(res.data.errors){
-          popupStore.msg(res.data.errors[0][0], 'error')
+        
+        // API sucks
+        if(res.data.email){
+          popupStore.msg(res.data.email[0], 'error')
         }
+        if(res.data.username){
+          popupStore.msg(res.data.username[0], 'error')
+        }
+        if(res.data.password){
+          popupStore.msg(res.data.password[0], 'error')
+        }
+
         if(res.data.response){
           popupStore.msg("You have signed up successfuly", 'info')
           setTimeout(() => {

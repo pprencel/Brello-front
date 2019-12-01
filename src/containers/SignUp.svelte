@@ -17,8 +17,8 @@
     <form on:submit|preventDefault="{handleSubmit}" class="bg-indigo-500 p-4" style="width: 300px" autocomplete="off">
       <label class="block w-full mt-2 text-white" for="email">Email</label>
       <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="email" autocomplete="false">
-      <label class="block w-full mt-3 text-white" for="login">Login</label>
-      <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="login" autocomplete="false">
+      <label class="block w-full mt-3 text-white" for="username">Login</label>
+      <input class="block w-full mt-1 p-1 text-gray-800" type="text" id="username" autocomplete="false">
       <label class="block w-full mt-3 text-white" for="email">Password</label>
       <input class="block w-full mt-1 p-1 text-gray-800" type="password" id="password" autocomplete="false">
       <label class="block w-full mt-3 text-white" for="email">Password confirmation</label>

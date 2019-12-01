@@ -34,9 +34,6 @@ axiosInstance.interceptors.response.use(
   response => response,
   error => {
     console.log(error);
-    // console.log(error.response)
-    // console.log(error.response.status);
-    // console.log('KURWAs');
 
     if (error.response.status === 401) {
       const path = window.location.pathname;
@@ -44,6 +41,7 @@ axiosInstance.interceptors.response.use(
         console.log('prevent redirect');
         console.log(error.response);
         popupStore.msg(error.response.data.detail, "error")
+        Promise.resolve(true)
       }else if(path !== '/unauthorized'){
         console.log('redirect');
         window.location.href = '/unauthorized'
