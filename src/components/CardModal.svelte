@@ -8,7 +8,7 @@
   import menuIcon from "../../public/images/menuIcon.png"
   import attachmentIcon from "../../public/images/attachmentIcon.png"
 	import Loader from "./common/Loader.svelte";
-
+	import moment from 'moment';
 	let promise;
 	let newCommentBody = "";
 
@@ -34,6 +34,7 @@
 		const file = e.target.files[0]
 
 		promise = cardStore.uploadAttachment(file, store.card.id)
+		promise = cardStore.openCard(store.card.id)
 	}
 
 	const handleRemoveAttachment = (e) => {
@@ -41,13 +42,18 @@
 		console.log('remove attached');
 	}
 
-	const handleAddCommentAttachment = (e) => {
-		promise = cardStore.saveCommentAttachment(file, store.card.id)
+	const handleAddCommentAttachment = (e, commentId) => {
+		promise = cardStore.saveCommentAttachment(file, commentId)
 	}
 
 	const handleSaveComment = (e) => {
+		let file = "tak"
 		promise = cardStore.saveComment(store.card.id, newCommentBody)
+		if(false)
+			handleAddCommentAttachment(file, promise.id)
+
 		newCommentBody = ""
+		promise = cardStore.openCard(store.card.id)
 	}
 </script>
 
@@ -113,7 +119,7 @@
 	          </div>
 
 	          <!-- ATTACHMENT -->
-						{#if store.card.attachment}
+						{#if store.card.attachmentUrlCard}
 		          <div class="w-full flex flex-row mt-10">
 		            <div class="w-1/12 pt-1">
 		              <img src={attachmentIcon}/>
@@ -124,13 +130,13 @@
 										<div class="flex flex-row flex-no-wrap w-4/5 mb-2">
 											<a
 												class="bg-indigo-400 w-1/6 h-full p-5 font-bold"
-												href={store.card.attachment}
+												href={store.card.attachmentUrlCard}
 												target="_blank"
 											>
-												{store.card.attachment.split('.').pop().toUpperCase()}
+												{store.card.attachmentFileFormat}
 											</a>
 											<div class="w-5/6 p-2 truncate bg-indigo-300 font-bold">
-												<p>{store.card.attachment.substr(store.card.attachment.lastIndexOf('/')+1)}</p>
+												<p>{store.card.attachmentFileName}</p>
 												<button on:click={handleRemoveAttachment} class="text-xs underline">DELETE</button>
 											</div>
 										</div>
@@ -176,9 +182,10 @@
 										{#each store.card.comments as comment}
 											<div class="my-4">
 												<div class="flex flex-row">
-													<button class="-ml-16 mr-8 bg-indigo-300 px-3 py-1 rounded-full" title={comment.username}> {comment.username.charAt(0).toUpperCase()} </button>
-													<span class="font-bold">{comment.username}</span>
-													<span class="ml-3">{comment.date}</span>
+												<!-- {comment.idUser.charAt(0).toUpperCase()} -->
+													<button class="-ml-16 mr-8 bg-indigo-300 px-3 py-1 rounded-full" title={comment.idUser}> {comment.idUser} </button>
+													<span class="font-bold">{comment.idUser}</span>
+													<span class="ml-3">{moment(comment.published_date).fromNow()}</span>
 												</div>
 												<p class="bg-indigo-400 p-2 my-2 w-4/5">
 												{comment.body}
