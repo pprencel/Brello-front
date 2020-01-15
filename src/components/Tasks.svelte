@@ -70,6 +70,10 @@
 		})
 	}
 
+	const getPercentOfCheckedTasks = (taskList) => {
+		let value = (taskList.tasks.filter(v => v.status).length / taskList.tasks.length) * 100
+		return Math.round(value)
+	}
 </script>
 
 {#if store && store.visible}
@@ -100,8 +104,15 @@
             >
               DELETE
             </button>
-            <div class="mt-5 bg-red-400 w-full">
-              PROGRESS...
+            <div class="mt-5 w-full flex flex-row justify-center">
+							<span class="w-1/12 font-bold mt-1">
+								{getPercentOfCheckedTasks(taskList)} %
+							</span>
+            	<progress
+								value={getPercentOfCheckedTasks(taskList)}
+							 	max="100"
+								class="w-11/12 my-2 bg-indigo-200 text-indigo-700"
+							></progress>
             </div>
               {#each taskList.tasks as task}
                 <div class="w-full mt-4 mr-4 ">
@@ -178,4 +189,5 @@ button:focus, input:focus {
 textarea::placeholder {
 	color: #edf2f7;
 }
+progress::-moz-progress-bar { background: #5a67d8; }
 </style>

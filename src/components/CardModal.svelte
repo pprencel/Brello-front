@@ -77,19 +77,6 @@
 		})
 	}
 
-	const handleRemoveTaskList = (taskListId) => {
-		promise = cardStore.removeTaskList(taskListId).then(() => {
-			promise = cardStore.openCard(store.card.id)
-		})
-	}
-
-	const handleAddTask = () => {
-		console.log(newTaskName);
-		// promise = cardStore.removeTaskList(taskListId).then(() => {
-		// 	promise = cardStore.openCard(store.card.id)
-		// })
-	}
-
 	const handleSaveComment = (e) => {
 		promise = cardStore.saveComment(store.card.id, newCommentBody)
 		if(false)
@@ -195,7 +182,7 @@
 
 	          <!-- CHECKLIST -->
 						{#if store.card.tasklists}
-							<Tasks taskList={store.card.taskList}/>
+							<Tasks/>
 						{/if}
 
 	          <!-- ACTIVITY -->
@@ -237,8 +224,8 @@
 											<div class="my-4">
 												<div class="flex flex-row">
 												<!-- {comment.idUser.charAt(0).toUpperCase()} -->
-													<button class="-ml-16 mr-8 bg-indigo-300 px-3 py-1 rounded-full" title={comment.idUser.username}> {comment.idUser.username.charAt(0).toUpperCase()} </button>
-													<span class="font-bold">{comment.idUser.username}</span>
+													<button class="-ml-16 mr-8 bg-indigo-300 px-3 py-1 rounded-full" title={comment.username}> {comment.username.charAt(0).toUpperCase()} </button>
+													<span class="font-bold">{comment.username}</span>
 													<span class="ml-3">{moment(comment.published_date).fromNow()}</span>
 												</div>
 												<p class="bg-indigo-400 p-2 my-2 w-4/5">
