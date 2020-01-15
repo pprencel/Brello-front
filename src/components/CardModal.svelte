@@ -8,11 +8,15 @@
   import checkedIcon from "../../public/images/tick.png"
   import attachmentIcon from "../../public/images/attachmentIcon.png"
 	import Loader from "./common/Loader.svelte";
+	import Tasks from "./Tasks.svelte";
 	import moment from 'moment';
 	import constants from '../constants/constants';
 	let promise;
 	let newCommentBody = "";
 	let newCardDescriptiony = "";
+	let newTaskName = "";
+	let taskEditMode = false;
+	let taskListEditMode = false;
 
   let store
 	let currentUser;
@@ -25,11 +29,14 @@
     })
   })
 
-  const hideModal = (e) => {
+  const handleCloaseBox = (e) => {
     if(e.target.id === "bgClose" || e.target.id === "btnClose"){
       promise = cardStore.hideModal()
-      console.log('hide');
+			return true;
     }
+
+		taskEditMode = false;
+		taskListEditMode = false;
   }
 	// TODO: impement
 	const handleUpdateDescription = (e) => {
@@ -64,8 +71,18 @@
 	}
 
 	const handleRemoveTaskList = (taskListId) => {
-		console.log('remove tasklist - #'+taskListId);
+		promise = cardStore.removeTaskList(taskListId).then(() => {
+			promise = cardStore.openCard(store.card.id)
+		})
 	}
+
+	const handleAddTask = () => {
+		console.log(newTaskName);
+		// promise = cardStore.removeTaskList(taskListId).then(() => {
+		// 	promise = cardStore.openCard(store.card.id)
+		// })
+	}
+
 	const handleSaveComment = (e) => {
 		promise = cardStore.saveComment(store.card.id, newCommentBody)
 		if(false)
@@ -80,9 +97,12 @@
 	{#await promise}
 		<Loader />
 	{:then nothing}
+		{#if store.isLoading }
+			<Loader />
+		{:else}
 	  <div
 	    id="bgClose"
-	    on:click={hideModal}
+	    on:click={handleCloaseBox}
 	    class="flex flex-row justify-center fixed top-0 pt-20 w-full z-20"
 	  >
 	    <div class="hide-scrollbar w-3/4 bg-indigo-500 py-8 px-4 pb-10 text-white  overflow-y-auto border-8 border-indigo-500 ">
@@ -165,35 +185,10 @@
 		            </div>
 		          </div>
 						{/if}
+
 	          <!-- CHECKLIST -->
 						{#if store.card.tasklists}
-		          <div class="w-full flex flex-col mt-10">
-								{#each store.card.tasklists as taskList}
-									<div class="w-full flex flex-row mb-5">
-
-										<div class="w-1/12 pt-1">
-											<img src={checklistIcon}/>
-										</div>
-
-										<div class="w-11/12 ml-5">
-											<p class="font-bold text-2xl inline-block"> {taskList.nameTaskList} </p>
-											<button
-												class="float-right px-4 py-2 bg-indigo-600"
-												on:click={() => handleRemoveTaskList(taskList.id)}
-											>
-												DELETE
-											</button>
-												{#each taskList.tasks as task}
-													<div class=" w-full mt-4 mr-4 ">
-														<div class="bg-red-300">
-															{task.descriptionTask}
-														</div>
-													</div>
-												{/each}
-				              </div>
-			              </div>
-								{/each}
-		          </div>
+							<Tasks taskList={store.card.taskList}/>
 						{/if}
 
 	          <!-- ACTIVITY -->
@@ -306,9 +301,10 @@
 
 	    </div>
 	  </div>
+		{/if}
 	  <div
 	    id="bgClose"
-	    on:click={hideModal}
+	    on:click={handleCloaseBox}
 	    class="bg-gray-300 opacity-50 z-10 w-full h-full fixed top-0"
 	  >
 	  </div>
@@ -330,5 +326,8 @@ button:focus, input:focus {
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+textarea::placeholder {
+	color: #edf2f7;
 }
 </style>

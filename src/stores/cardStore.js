@@ -22,9 +22,9 @@ let init = {
           body: "hallo janko"
         },
       ]
-      // attachment: 'https://i.redd.it/3yps4sdvzfm21.png'
   },
-  visible: false
+  visible: false,
+  isLoading: false
 }
 
 function createCardStore() {
@@ -33,11 +33,16 @@ function createCardStore() {
     return {
       subscribe,
       openCard: async (cardId) => {
+        update(v => {
+          v.isLoading = true
+          return v
+        })
         const res = await API(`cards/${cardId}/?format=json`)
         console.log(res.data);
         update(v => {
           v.card = res.data
           v.visible = true
+          v.isLoading = false
           return v
         })
 
@@ -88,11 +93,34 @@ function createCardStore() {
         if(res)
           return true
       },
+
+      removeTaskList: async (trackListId) => {
+        const res = await API.delete(`tasklists/${trackListId}/`)
+        if(res)
+          return true
+      },
+
+      addTaskToTaskList: async (taskListId, taskName) => {
+        const res = await API.post(`tasks/`, {
+          	descriptionTask: taskName,
+          	idTaskList: taskListId,
+          	status: false
+        })
+        if(res)
+          return true
+      },
+
+      deleteTask: async (taskId) => {
+        const res = await API.delete(`tasks/${taskId}`)
+        if(res)
+          return true
+      },
+
       saveComment: async (cardId, commentBody) => {
         const res = await API.post(`comments/?format=json`, {
           body: commentBody,
           idCard: cardId,
-          idUser: userStore.user 
+          idUser: userStore.user
         })
 
         update(v => {
