@@ -15,6 +15,7 @@ const setupValues =
   loggedIn: authToken ? true : false,
   email: decodedToken ? decodedToken.email : null,
   username: decodedToken ? decodedToken.username : null,
+  userId: decodedToken ? decodedToken.user_id : null,
   register_error: [],
   response: null,
 }

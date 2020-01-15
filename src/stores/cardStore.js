@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import API from '../utils/api';
 import constants from '../constants/constants.json'
-import userStore from './userStore'
+import userStore from './userStore.js'
 
 let init = {
   card: {
@@ -167,22 +167,13 @@ function createCardStore() {
         })
       },
 
-      saveComment: async (cardId, commentBody) => {
+      saveComment: async (cardId, userId, commentBody) => {
         const res = await API.post(`comments/?format=json`, {
           body: commentBody,
           idCard: cardId,
-          idUser: userStore.user
+          idUser: userId
         })
 
-        update(v => {
-          v.card.comments.unshift({
-            idUser: "J",
-            published_date: "2019-12-25 22:03:01",
-            body: commentBody
-          })
-          v.visible = true
-          return v
-        })
         // return res.data
       },
       saveCommentAttachment: async (file, commentId) => {

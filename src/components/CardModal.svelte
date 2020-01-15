@@ -74,9 +74,10 @@
 	}
 
 	const handleSaveComment = (e) => {
-		promise = cardStore.saveComment(store.card.id, newCommentBody)
-		if(false)
-			handleAddCommentAttachment(file, promise.id)
+		if(newCommentBody !== "")
+			promise = cardStore.saveComment(store.card.id, currentUser.userId, newCommentBody)
+		// if(false)
+		// 	handleAddCommentAttachment(file, promise.id)
 
 		newCommentBody = ""
 		promise = cardStore.openCard(store.card.id)
