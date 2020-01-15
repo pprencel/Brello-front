@@ -111,9 +111,35 @@ function createCardStore() {
       },
 
       deleteTask: async (taskId) => {
+        update(v => {
+          v.isLoading = true
+          return v
+        })
         const res = await API.delete(`tasks/${taskId}`)
         if(res)
           return true
+        update(v => {
+          v.isLoading = false
+          return v
+        })
+      },
+
+      updateTask: async (task) => {
+        update(v => {
+          v.isLoading = true
+          return v
+        })
+        const res = await API.put(`tasks/${task.id}/`, {
+          descriptionTask: task.descriptionTask,
+          idTaskList: task.idTaskList,
+          status: task.status
+        })
+        if(res)
+          return true
+        update(v => {
+          v.isLoading = false
+          return v
+        })
       },
 
       saveComment: async (cardId, commentBody) => {

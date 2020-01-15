@@ -3,7 +3,10 @@
   import { cardStore } from '../stores/cardStore.js';
   import { userStore } from '../stores/userStore.js';
   import checklistIcon from "../../public/images/checklist.png"
-  import checkedIcon from "../../public/images/tick.png"
+  import emptyCheckboxIcon from "../../public/images/emptyCheckboxIcon.png"
+  import selectedCheckboxIcon from "../../public/images/selectedCheckboxIcon.png"
+	import binIcon from "../../public/images/binIcon.png"
+
 	import Loader from "./common/Loader.svelte";
 	import constants from '../constants/constants';
 	let promise;
@@ -16,7 +19,6 @@
     const unsubscribeCard = cardStore.subscribe(async (value) => {
       store = value
     })
-		console.log(store.card);
   })
 
   const handleCloaseBox = (e) => {
@@ -51,6 +53,17 @@
 
 	const handleDeleteTask = (taskId) => {
 		cardStore.deleteTask(taskId).then(() => {
+			newTaskName = ""
+			taskEditMode = false
+			cardStore.openCard(store.card.id)
+		})
+	}
+
+	const handleChangeStatus = (task) => {
+		const newTask = task
+		console.log(task);
+		newTask.status = !newTask.status
+		cardStore.updateTask(newTask).then(() => {
 			newTaskName = ""
 			taskEditMode = false
 			cardStore.openCard(store.card.id)
@@ -93,18 +106,21 @@
               {#each taskList.tasks as task}
                 <div class="w-full mt-4 mr-4 ">
                   <div class="flex flex-row px-2 py-2 w-full bg-indigo-400">
-                    <div class="w-1/12">
-                      {task.status ? "X" : "O"}
-                    </div>
+                    <button
+											class="w-1/12 h-5 pt-1"
+											on:click={() => handleChangeStatus(task)}
+										>
+											<img class="h-5" src={task.status ? selectedCheckboxIcon : emptyCheckboxIcon}/>
+                    </button>
                     <div class="w-10/12">
                       {task.descriptionTask}
                     </div>
-                    <div
+                    <button
 											class="text-xs w-1/12"
 											on:click={() => handleDeleteTask(task.id)}
 										>
-                      DELETE
-                    </div>
+                      <img class="h-5" src={binIcon}/>
+                    </button>
                   </div>
                 </div>
               {/each}
