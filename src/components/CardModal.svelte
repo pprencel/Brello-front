@@ -6,6 +6,13 @@
   import menuIcon from "../../public/images/menuIcon.png"
   import checklistIcon from "../../public/images/checklist.png"
   import checkedIcon from "../../public/images/tick.png"
+  import labelsIcon from "../../public/images/labelsIcon.png"
+  import duedateIcon from "../../public/images/duedateIcon.png"
+  import moveIcon from "../../public/images/moveIcon.png"
+  import copyIcon from "../../public/images/copyIcon.png"
+  import watchIcon from "../../public/images/watchIcon.png"
+  import archiveIcon from "../../public/images/archiveIcon.png"
+  import shareIcon from "../../public/images/shareIcon.png"
   import attachmentIcon from "../../public/images/attachmentIcon.png"
 	import Loader from "./common/Loader.svelte";
 	import Tasks from "./Tasks.svelte";
@@ -258,7 +265,7 @@
 	            <span class="float-left ml-2">Members</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={labelsIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Labels</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
@@ -266,7 +273,7 @@
 	            <span class="float-left ml-2">Checklist</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={duedateIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Due Date</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
@@ -277,23 +284,23 @@
 
 	          <span class="block text-sm mt-6">ACTIONS</span>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={moveIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Move</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={copyIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Copy</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={watchIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Watch</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={archiveIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Archive</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={shareIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Share</span>
 	          </button>
 	        </div>
