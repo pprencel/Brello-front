@@ -73,21 +73,15 @@ function createTableStore() {
           console.log(`tables/${tableId}/?format=json`);
           const res = await API(`tables/${tableId}/?format=json`)
           res.data.users = ["KP", "AZ"],
-
-          console.log(res.data);
-
           set(res.data)
           return res.data
-          // await set(mockTabValues)
-          // return mockTabValues
+
         }else {
           console.log('empty');
-          // await set(mockTabValues)
         }
       },
       changeTableName: async (tableId, newTableName) => {
-        console.log(tableId);
-        console.log(newTableName);
+
         const res = await API.put(`tables/${tableId}/`, {
           tableName: newTableName,
           lists: []

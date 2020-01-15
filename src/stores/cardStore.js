@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import API from '../utils/api';
 import constants from '../constants/constants.json'
+import userStore from './userStore'
 
 let init = {
   card: {
@@ -33,32 +34,29 @@ function createCardStore() {
       subscribe,
       openCard: async (cardId) => {
         const res = await API(`cards/${cardId}/?format=json`)
-        if(res.data.attachmentUrlCard !== "null")
-          res.data.attachmentUrlCard = `${res.data.attachmentUrlCard}${constants.ATTACHMENT_TOKEN}`
-        else
-          res.data.attachmentUrlCard = null
-
+        console.log(res.data);
         update(v => {
           v.card = res.data
           v.visible = true
-          if(v.card.attachmentUrlCard) {
-            let regex = /\/([a-zA-Z0-9_ -.]*)\?/gi;
-            let fileName = regex.exec(v.card.attachmentUrlCard)[0].slice(1, -1)
-            v.card.attachmentFileName = fileName.substr(fileName.lastIndexOf('/')+1)
-            v.card.attachmentFileFormat = fileName.split('.').pop().toUpperCase()
-          }
-
-          console.log(v.card.attachmentFileName);
           return v
         })
+
       },
-      addCard: async (newCardName) => {
+      addCard: async (newCardName, listId) => {
         console.log('API call', newCardName);
-        // update(v => {
-        //   v.visible = true
-        //   v.card = init.card
-        //   return v
-        // })
+        const res = await API.post('cards/', {
+        	descriptionCard: "Card description...",
+        	cardName: newCardName,
+        	idList: listId
+        })
+        return true;
+      },
+      editDescription: async (cardId, newCardDescription) => {
+        console.log('desc');
+        const res = await API.patch(`cards/${cardId}`, {
+        	descriptionCard: newCardDescription,
+        })
+        return true;
       },
       hideModal: async () => {
         // should be - PATCH this card
@@ -70,50 +68,43 @@ function createCardStore() {
           return v
         })
       },
-      uploadAttachment: async (file, cardId) => {
+      uploadAttachment: async (file, fileName, fileFormat, cardId) => {
         const formData = new FormData();
-        formData.append("image", file);
-        // formData.pipe(async data => {
-        //   res = await API.put(`card_attachment_add/${cardId}/`, data)
-        //   console.log(r.data)
-        // })
-        const res = await API.put(`card_attachment_add/${cardId}/`, formData, {
+        formData.append("data", file);
+        formData.append("idCard", cardId);
+        formData.append("name", fileName);
+        formData.append("type", fileFormat);
+
+        const res = await API.post(`attachment-add/`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
-        console.log(res);
-        console.log('111111');
-        // update(v => {
-        //   v.card.attachment = 'https://i.redd.it/3yps4sdvzfm21.png'
-        //   return v
-        // })
+        if(res)
+          return true
       },
-      removeAttachment: async (cardId) => {
-        const res = await API.put(`card_attachment_delete/${cardId}/`)
-
-        update(v => {
-          v.card.attachment = null
-          return v
-        })
+      removeAttachment: async (attachmentId) => {
+        const res = await API.delete(`attachment-delete/${attachmentId}/`)
+        if(res)
+          return true
       },
       saveComment: async (cardId, commentBody) => {
         const res = await API.post(`comments/?format=json`, {
           body: commentBody,
           idCard: cardId,
-          idUser: 1
+          idUser: userStore.user 
         })
 
         update(v => {
-          // v.card.comments.push({
-          //   username: "janok Oblak",
-          //   date: "2019-12-25 22:03:01",
-          //   body: commentBody
-          // })
+          v.card.comments.unshift({
+            idUser: "J",
+            published_date: "2019-12-25 22:03:01",
+            body: commentBody
+          })
           v.visible = true
           return v
         })
-        return res.data
+        // return res.data
       },
       saveCommentAttachment: async (file, commentId) => {
         const formData = new FormData();
@@ -123,14 +114,6 @@ function createCardStore() {
             'Content-Type': 'multipart/form-data'
           }
         })
-        // const res = await API.post(`cards//?format=json`, {
-        //   file: formData
-        // })
-
-        // update(v => {
-        //   v.card.attachment = 'https://i.redd.it/3yps4sdvzfm21.png'
-        //   return v
-        // })
       },
 
       reset: () => set({})

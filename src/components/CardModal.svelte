@@ -1,16 +1,18 @@
 <script>
 	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
-  import TableHeader from './TableHeader.svelte';
-  import List from './List.svelte';
   import { cardStore } from '../stores/cardStore.js';
   import { userStore } from '../stores/userStore.js';
   import userIcon from "../../public/images/userIcon.png"
   import menuIcon from "../../public/images/menuIcon.png"
+  import checklistIcon from "../../public/images/checklist.png"
+  import checkedIcon from "../../public/images/tick.png"
   import attachmentIcon from "../../public/images/attachmentIcon.png"
 	import Loader from "./common/Loader.svelte";
 	import moment from 'moment';
+	import constants from '../constants/constants';
 	let promise;
 	let newCommentBody = "";
+	let newCardDescriptiony = "";
 
   let store
 	let currentUser;
@@ -29,25 +31,42 @@
       console.log('hide');
     }
   }
+	// TODO: impement
+	const handleUpdateDescription = (e) => {
+		console.log(e.target);
+		// const file = e.target.files[0]
+	}
 
 	const handleFileAttach = (e) => {
 		const file = e.target.files[0]
-
-		promise = cardStore.uploadAttachment(file, store.card.id)
-		promise = cardStore.openCard(store.card.id)
+		console.log(file);
+		const fileName = file.name.substr(0, file.name.lastIndexOf("."))
+		const fileFormat = file.name.substr(file.name.lastIndexOf(".")+1)
+		promise = cardStore.uploadAttachment(file, fileName, fileFormat, store.card.id).then(() => {
+			promise = cardStore.openCard(store.card.id)
+		})
 	}
 
-	const handleRemoveAttachment = (e) => {
-		promise = cardStore.removeAttachment(store.card.id)
-		console.log('remove attached');
+	const handleRemoveAttachment = (attachmentId) => {
+		promise = cardStore.removeAttachment(attachmentId).then(() => {
+			promise = cardStore.openCard(store.card.id)
+		})
 	}
 
 	const handleAddCommentAttachment = (e, commentId) => {
-		promise = cardStore.saveCommentAttachment(file, commentId)
+		const file = e.target.files[0]
+		console.log(file);
+		const fileName = file.name.substr(0, file.name.lastIndexOf("."))
+		const fileFormat = file.name.substr(file.name.lastIndexOf(".")+1)
+		promise = cardStore.uploadAttachment(file, fileName, fileFormat, store.card.id).then(() => {
+			newCommentBody = `[${fileName}]`
+		})
 	}
 
+	const handleRemoveTaskList = (taskListId) => {
+		console.log('remove tasklist - #'+taskListId);
+	}
 	const handleSaveComment = (e) => {
-		let file = "tak"
 		promise = cardStore.saveComment(store.card.id, newCommentBody)
 		if(false)
 			handleAddCommentAttachment(file, promise.id)
@@ -83,7 +102,7 @@
 	            <div class="w-11/12 ml-2">
 	              <p class="font-bold text-2xl"> {store.card.cardName} </p>
 	              <p class="font-bold">
-	                in list <a class="underline">{store.card.listName}</a>
+	                in list <a class="underline">{store.card.idList.listName}</a>
 	              </p>
 	              <div class="flex flex-row mt-8 text-xs">
 	                <div class="mr-8">
@@ -113,37 +132,70 @@
 	              <p class="font-bold text-2xl inline-block"> Description </p>
 	              <button class="mr-1 bg-indigo-200 text-gray-800 ml-2 -mb-1 px-3 py-1 rounded-sm"> EDIT </button>
 	              <div class="w-full mt-4 mr-4">
-	                {store.card.description}
+	                {store.card.descriptionCard}
 	              </div>
 	            </div>
 	          </div>
 
 	          <!-- ATTACHMENT -->
-						{#if store.card.attachmentUrlCard}
+						{#if store.card.attachments}
 		          <div class="w-full flex flex-row mt-10">
 		            <div class="w-1/12 pt-1">
 		              <img src={attachmentIcon}/>
 		            </div>
 		            <div class="w-11/12 ml-2">
-		              <p class="font-bold text-2xl inline-block"> Attachment </p>
-		              <div class=" w-full mt-4 mr-4 ">
-										<div class="flex flex-row flex-no-wrap w-4/5 mb-2">
-											<a
-												class="bg-indigo-400 w-1/6 h-full p-5 font-bold"
-												href={store.card.attachmentUrlCard}
-												target="_blank"
-											>
-												{store.card.attachmentFileFormat}
-											</a>
-											<div class="w-5/6 p-2 truncate bg-indigo-300 font-bold">
-												<p>{store.card.attachmentFileName}</p>
-												<button on:click={handleRemoveAttachment} class="text-xs underline">DELETE</button>
+		              <p class="font-bold text-2xl inline-block"> Attachments </p>
+									{#each store.card.attachments as attachment}
+			              <div class=" w-full mt-4 mr-4 ">
+											<div class="flex flex-row flex-no-wrap w-4/5 mb-2">
+												<a
+													class="bg-indigo-400 w-1/6 h-full p-5 font-bold"
+													href={`${attachment.url}${constants.ATTACHMENT_TOKEN}`}
+													target="_blank"
+												>
+													{attachment.formatUrl.toUpperCase()}
+												</a>
+												<div class="w-5/6 p-2 truncate bg-indigo-300 font-bold">
+													<p>{attachment.nameUrl}</p>
+													<button on:click={() => handleRemoveAttachment(attachment.id)} class="text-xs underline">DELETE</button>
+												</div>
 											</div>
-										</div>
-		              </div>
+			              </div>
+									{/each}
 		            </div>
 		          </div>
 						{/if}
+	          <!-- CHECKLIST -->
+						{#if store.card.tasklists}
+		          <div class="w-full flex flex-col mt-10">
+								{#each store.card.tasklists as taskList}
+									<div class="w-full flex flex-row mb-5">
+
+										<div class="w-1/12 pt-1">
+											<img src={checklistIcon}/>
+										</div>
+
+										<div class="w-11/12 ml-5">
+											<p class="font-bold text-2xl inline-block"> {taskList.nameTaskList} </p>
+											<button
+												class="float-right px-4 py-2 bg-indigo-600"
+												on:click={() => handleRemoveTaskList(taskList.id)}
+											>
+												DELETE
+											</button>
+												{#each taskList.tasks as task}
+													<div class=" w-full mt-4 mr-4 ">
+														<div class="bg-red-300">
+															{task.descriptionTask}
+														</div>
+													</div>
+												{/each}
+				              </div>
+			              </div>
+								{/each}
+		          </div>
+						{/if}
+
 	          <!-- ACTIVITY -->
 	          <div class="w-full flex flex-row mt-10">
 	            <div class="w-1/12 pt-1">
@@ -183,8 +235,8 @@
 											<div class="my-4">
 												<div class="flex flex-row">
 												<!-- {comment.idUser.charAt(0).toUpperCase()} -->
-													<button class="-ml-16 mr-8 bg-indigo-300 px-3 py-1 rounded-full" title={comment.idUser}> {comment.idUser} </button>
-													<span class="font-bold">{comment.idUser}</span>
+													<button class="-ml-16 mr-8 bg-indigo-300 px-3 py-1 rounded-full" title={comment.idUser.username}> {comment.idUser.username.charAt(0).toUpperCase()} </button>
+													<span class="font-bold">{comment.idUser.username}</span>
 													<span class="ml-3">{moment(comment.published_date).fromNow()}</span>
 												</div>
 												<p class="bg-indigo-400 p-2 my-2 w-4/5">
@@ -215,7 +267,7 @@
 	            <span class="float-left ml-2">Labels</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
-	            <img src={userIcon} class="inline-block w-5 float-left mt-1">
+	            <img src={checklistIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Checklist</span>
 	          </button>
 	          <button class="w-full bg-indigo-600 block p-2 my-2">

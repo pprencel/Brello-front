@@ -1,9 +1,11 @@
 <script>
 	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
 	import { cardStore } from '../stores/cardStore';
+	import { tableStore } from '../stores/tableStore';
   export let list;
 	let addNewCardMode = false
 	let newCardName = null;
+	let promise;
 
 	const openCardModal = (e) => {
 		addNewCardMode = false
@@ -15,10 +17,14 @@
 	const handleAddNewCard = (e) => {
 		console.log('new card name - ' + newCardName);
 		addNewCardMode = false
-		cardStore.addCard(newCardName)
+		promise  = cardStore.addCard(newCardName, list.id)
+		promise = tableStore.loadTable(list.idTable)
 	}
 </script>
 
+{#await promise}
+	<Loader />
+{:then nothing}
 
   <div class="w-1/4 m-2 bg-indigo-300 border-indigo-500 border rounded-sm">
     <div class="flex flex-row flex-no-wrap w-full border-b border-indigo-500">
@@ -66,6 +72,8 @@
 		</div>
 
   </div>
-
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
 <style>
 </style>

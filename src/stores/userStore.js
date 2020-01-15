@@ -35,7 +35,7 @@ function createUsersStore() {
           password: formValues.password.value,
           password_confirm: formValues.password_confirm.value,
         })
-        
+
         // API sucks
         if(res.data.email){
           popupStore.msg(res.data.email[0], 'error')
