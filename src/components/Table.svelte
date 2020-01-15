@@ -8,11 +8,8 @@
 
   export let tableId;
   let table;
-
   let promise = tableStore.loadTable()
 
-	// Propably solution for fixed height of
-	// window.screen.height - document.getElementsByClassName('test')[0].offsetTop
   onMount(()=> {
     const unsubscribe = tableStore.subscribe(async (value) => {
       table = value
@@ -50,6 +47,7 @@
 
 .break-column {
   flex-basis: 100%;
+	max-width: 0%;
   width: 0;
 }
 </style>

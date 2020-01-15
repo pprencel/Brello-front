@@ -2,6 +2,7 @@
 	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
 	import { cardStore } from '../stores/cardStore';
 	import { tableStore } from '../stores/tableStore';
+	import Loader from "./common/Loader.svelte";
   export let list;
 	let addNewCardMode = false
 	let newCardName = null;
@@ -17,15 +18,17 @@
 	const handleAddNewCard = (e) => {
 		console.log('new card name - ' + newCardName);
 		addNewCardMode = false
-		promise  = cardStore.addCard(newCardName, list.id)
-		promise = tableStore.loadTable(list.idTable)
+		promise = cardStore.addCard(newCardName, list.id).then(() => {
+			promise = tableStore.loadTable(list.idTable)
+			// HACK: remove that
+			location.reload();
+		});
 	}
 </script>
 
 {#await promise}
 	<Loader />
-{:then nothing}
-
+{:then nth}
   <div class="w-1/4 m-2 bg-indigo-300 border-indigo-500 border rounded-sm">
     <div class="flex flex-row flex-no-wrap w-full border-b border-indigo-500">
       <p class="w-4/5 p-2 font-bold truncate"> {list.listName} </p>

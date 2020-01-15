@@ -61,7 +61,6 @@
 
 	const handleChangeStatus = (task) => {
 		const newTask = task
-		console.log(task);
 		newTask.status = !newTask.status
 		cardStore.updateTask(newTask).then(() => {
 			newTaskName = ""
@@ -71,7 +70,11 @@
 	}
 
 	const getPercentOfCheckedTasks = (taskList) => {
+		if (taskList.tasks.length === 0)
+			return 0;
+
 		let value = (taskList.tasks.filter(v => v.status).length / taskList.tasks.length) * 100
+		// console.log('Percent value: '+value);
 		return Math.round(value)
 	}
 </script>
@@ -105,13 +108,13 @@
               DELETE
             </button>
             <div class="mt-5 w-full flex flex-row justify-center">
-							<span class="w-1/12 font-bold mt-1">
-								{getPercentOfCheckedTasks(taskList)} %
+							<span class="font-bold mt-1 whitespace-no-wrap mr-2">
+								{`${getPercentOfCheckedTasks(taskList)} %`}
 							</span>
             	<progress
 								value={getPercentOfCheckedTasks(taskList)}
 							 	max="100"
-								class="w-11/12 my-2 bg-indigo-200 text-indigo-700"
+								class="w-full my-2 bg-indigo-200 text-indigo-700"
 							></progress>
             </div>
               {#each taskList.tasks as task}
@@ -173,10 +176,6 @@
 {/if}
 
 <style>
-
-button:focus, input:focus {
-	outline: 0
-}
 
 .hide-scrollbar {
 	height: 80vh;

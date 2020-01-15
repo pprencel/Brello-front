@@ -21,9 +21,8 @@
 	let promise;
 	let newCommentBody = "";
 	let newCardDescriptiony = "";
-	let newTaskName = "";
-	let taskEditMode = false;
-	let taskListEditMode = false;
+	let newTaskListName = "";
+	let addTaskListMode = false;
 
   let store
 	let currentUser;
@@ -41,9 +40,6 @@
       promise = cardStore.hideModal()
 			return true;
     }
-
-		taskEditMode = false;
-		taskListEditMode = false;
   }
 	// TODO: impement
 	const handleUpdateDescription = (e) => {
@@ -85,6 +81,14 @@
 		newCommentBody = ""
 		promise = cardStore.openCard(store.card.id)
 	}
+
+	const handleCreateTaskList = () => {
+		promise = cardStore.createTaskList(newTaskListName, store.card.id).then(() => {
+			newTaskListName = ""
+			addTaskListMode = false
+			promise = cardStore.openCard(store.card.id)
+		})
+	}
 </script>
 
 {#if store && store.visible}
@@ -116,7 +120,7 @@
 	            <div class="w-11/12 ml-2">
 	              <p class="font-bold text-2xl"> {store.card.cardName} </p>
 	              <p class="font-bold">
-	                in list <a class="underline">{store.card.idList.listName}</a>
+	                in list <a class="underline">{store.card.list_name}</a>
 	              </p>
 	              <div class="flex flex-row mt-8 text-xs">
 	                <div class="mr-8">
@@ -255,10 +259,40 @@
 	            <img src={labelsIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Labels</span>
 	          </button>
-	          <button class="w-full bg-indigo-600 block p-2 my-2">
+	          <button
+								class="w-full bg-indigo-600 block p-2 my-2"
+								on:click={() => addTaskListMode = true}
+							>
 	            <img src={checklistIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Checklist</span>
 	          </button>
+						{#if addTaskListMode}
+							<div>
+								<div
+									on:click|stopPropagation={() => addTaskListMode = false}
+									class="{`absolute w-full h-screen top-0 left-0 z-40 ${(addTaskListMode) ? 'block' : 'hidden'}`}">
+									.
+								</div>
+
+								<div class="relative absolute z-50 w-64 ml-1">
+									<div
+										class="pt-1"
+									>
+										New Checklist name:
+									</div>
+									<input
+										class="bg-indigo-300 px-2 py-1 my-2 w-2/3"
+										bind:value={newTaskListName}
+									/>
+									<button
+										class="px-4 py-2 bg-indigo-600  my-1 text-center"
+										on:click={handleCreateTaskList}
+									>
+										Add checklist
+									</button>
+								</div>
+							</div>
+						{/if}
 	          <button class="w-full bg-indigo-600 block p-2 my-2">
 	            <img src={duedateIcon} class="inline-block w-5 float-left mt-1">
 	            <span class="float-left ml-2">Due Date</span>

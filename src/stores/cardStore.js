@@ -56,6 +56,7 @@ function createCardStore() {
         })
         return true;
       },
+
       editDescription: async (cardId, newCardDescription) => {
         console.log('desc');
         const res = await API.patch(`cards/${cardId}`, {
@@ -63,6 +64,7 @@ function createCardStore() {
         })
         return true;
       },
+
       hideModal: async () => {
         // should be - PATCH this card
         const cardId = 1
@@ -73,6 +75,7 @@ function createCardStore() {
           return v
         })
       },
+
       uploadAttachment: async (file, fileName, fileFormat, cardId) => {
         const formData = new FormData();
         formData.append("data", file);
@@ -88,14 +91,34 @@ function createCardStore() {
         if(res)
           return true
       },
+
       removeAttachment: async (attachmentId) => {
         const res = await API.delete(`attachment-delete/${attachmentId}/`)
         if(res)
           return true
       },
 
+      createTaskList: async (newTrackListName, cardId) => {
+        const res = await API.post(`tasklists/`, {
+          nameTaskList: newTrackListName,
+          idCard: cardId
+        })
+        if(res)
+          return true
+      },
+
       removeTaskList: async (trackListId) => {
+        update(v => {
+          v.isLoading = true
+          return v
+        })
+
         const res = await API.delete(`tasklists/${trackListId}/`)
+
+        update(v => {
+          v.isLoading = false
+          return v
+        })
         if(res)
           return true
       },
@@ -116,12 +139,14 @@ function createCardStore() {
           return v
         })
         const res = await API.delete(`tasks/${taskId}`)
-        if(res)
-          return true
+
+
         update(v => {
           v.isLoading = false
           return v
         })
+        if(res)
+          return true
       },
 
       updateTask: async (task) => {
