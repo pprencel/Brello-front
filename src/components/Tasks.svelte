@@ -8,11 +8,14 @@
 	import binIcon from "../../public/images/binIcon.png"
 
 	import Loader from "./common/Loader.svelte";
+	import TaskList from "./TaskList.svelte";
 	import constants from '../constants/constants';
 	let promise;
 	let newTaskName = "";
+	let taskListEditedName = "";
 	let taskEditMode = false;
 	let taskListEditMode = false;
+	let trackNameEditMode = false;
 
   let store
   onMount(()=> {
@@ -91,83 +94,7 @@
 				on:click={handleCloaseBox}
 			/>
       {#each store.card.tasklists as taskList}
-        <div
-          class="w-full flex flex-row mb-5 relative z-40"
-        >
-
-          <div class="w-1/12 pt-1">
-            <img src={checklistIcon}/>
-          </div>
-
-          <div class="w-11/12 ml-5">
-            <p class="font-bold text-2xl inline-block"> {taskList.nameTaskList} </p>
-            <button
-              class="float-right px-4 py-2 bg-indigo-600"
-              on:click={() => handleRemoveTaskList(taskList.id)}
-            >
-              DELETE
-            </button>
-            <div class="mt-5 w-full flex flex-row justify-center">
-							<span class="font-bold mt-1 whitespace-no-wrap mr-2">
-								{`${getPercentOfCheckedTasks(taskList)} %`}
-							</span>
-            	<progress
-								value={getPercentOfCheckedTasks(taskList)}
-							 	max="100"
-								class="w-full my-2 bg-indigo-200 text-indigo-700"
-							></progress>
-            </div>
-              {#each taskList.tasks as task}
-                <div class="w-full mt-4 mr-4 ">
-                  <div class="flex flex-row px-2 py-2 w-full bg-indigo-400">
-                    <button
-											class="w-1/12 h-5 pt-1"
-											on:click={() => handleChangeStatus(task)}
-										>
-											<img class="h-5" src={task.status ? selectedCheckboxIcon : emptyCheckboxIcon}/>
-                    </button>
-                    <div class="w-10/12">
-                      {task.descriptionTask}
-                    </div>
-                    <button
-											class="text-xs w-1/12"
-											on:click={() => handleDeleteTask(task.id)}
-										>
-                      <img class="h-5" src={binIcon}/>
-                    </button>
-                  </div>
-                </div>
-              {/each}
-              <div class="w-full mt-4 mr-4" id="taskAddingBox">
-                <div class="flex flex-row px-3 py-2 mt-2 w-full">
-                  {#if !taskEditMode}
-                    <button
-                      class="px-4 py-2 bg-indigo-600"
-                      on:click|stopPropagation={() => taskEditMode = true}
-                    >
-                      Add an item
-                    </button>
-                  {:else}
-                    <div class="w-full">
-                      <textarea
-                        class="w-full p-2 mr-4 bg-indigo-400"
-                        rows="1"
-                        col="1"
-                        placeholder="Add an item..."
-                        bind:value={newTaskName}
-                      ></textarea>
-                      <button
-                        class="mt-1 ml-1 px-4 py-2 bg-indigo-600"
-                        on:click={() => handleAddTask(taskList.id)}
-                      >
-                        Add
-                      </button>
-                    </div>
-                  {/if}
-                </div>
-              </div>
-            </div>
-          </div>
+				<TaskList taskList={taskList} />
       {/each}
     </div>
 	{:catch error}

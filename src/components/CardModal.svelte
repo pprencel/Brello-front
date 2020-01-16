@@ -286,7 +286,7 @@
 										bind:value={newTaskListName}
 									/>
 									<button
-										class="px-4 py-2 bg-indigo-600  my-1 text-center"
+										class="px-4 py-2 bg-indigo-700  my-1 text-center"
 										on:click={handleCreateTaskList}
 									>
 										Add checklist

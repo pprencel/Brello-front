@@ -123,6 +123,24 @@ function createCardStore() {
           return true
       },
 
+      changeTaskListName: async (cardId, listId, newTrackListName) => {
+        update(v => {
+          v.isLoading = true
+          return v
+        })
+        const res = await API.put(`tasklists/${listId}/`, {
+          nameTaskList: newTrackListName,
+          idCard: cardId
+        })
+
+        update(v => {
+          v.isLoading = false
+          return v
+        })
+        if(res)
+          return true
+      },
+
       addTaskToTaskList: async (taskListId, taskName) => {
         const res = await API.post(`tasks/`, {
           	descriptionTask: taskName,
@@ -159,6 +177,24 @@ function createCardStore() {
           idTaskList: task.idTaskList,
           status: task.status
         })
+        if(res)
+          return true
+        update(v => {
+          v.isLoading = false
+          return v
+        })
+      },
+
+      changeTaskDescription: async (taskId, taskListId, newTaskDescription) => {
+        update(v => {
+          v.isLoading = true
+          return v
+        })
+        const res = await API.put(`tasks/${taskId}/`, {
+          descriptionTask: newTaskDescription,
+          idTaskList: taskListId,
+        })
+
         if(res)
           return true
         update(v => {
