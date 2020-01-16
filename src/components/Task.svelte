@@ -65,7 +65,7 @@
 	{:then nothing}
       <div class="w-full mt-4 mr-4 ">
         <div
-          class="{`absolute w-full h-screen top-0 left-0 bg-gray-500 opacity-50 z-30 ${(taskDescriptionEditMode) ? 'block' : 'hidden'}`}"
+          class="{`absolute w-full h-screen top-0 left-0 z-30 ${(taskDescriptionEditMode) ? 'block' : 'hidden'}`}"
           on:click={() => taskDescriptionEditMode = false}
         />
         <div

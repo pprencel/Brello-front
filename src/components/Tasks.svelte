@@ -90,7 +90,7 @@
       class={`w-full flex-col mt-10`}
     >
       <div
-				class="{`absolute w-full h-screen top-0 left-0 bg-gray-500 opacity-50 z-30 ${(taskEditMode || taskListEditMode) ? 'block' : 'hidden'}`}"
+				class="{`absolute w-full h-screen top-0 left-0 z-30 ${(taskEditMode || taskListEditMode) ? 'block' : 'hidden'}`}"
 				on:click={handleCloaseBox}
 			/>
       {#each store.card.tasklists as taskList}
