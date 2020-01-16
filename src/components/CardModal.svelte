@@ -74,13 +74,12 @@
 	}
 
 	const handleSaveComment = (e) => {
-		if(newCommentBody !== "")
-			promise = cardStore.saveComment(store.card.id, currentUser.userId, newCommentBody)
-		// if(false)
-		// 	handleAddCommentAttachment(file, promise.id)
-
-		newCommentBody = ""
-		promise = cardStore.openCard(store.card.id)
+		if(newCommentBody !== ""){
+			promise = cardStore.saveComment(store.card.id, currentUser.userId, newCommentBody).then(() => {
+				newCommentBody = ""
+				promise = cardStore.openCard(store.card.id)
+			})
+		}
 	}
 
 	const handleCreateTaskList = () => {
@@ -157,7 +156,7 @@
 	          </div>
 
 	          <!-- ATTACHMENT -->
-						{#if store.card.attachments}
+						{#if (store.card.attachments.length !== 0)}
 		          <div class="w-full flex flex-row mt-10">
 		            <div class="w-1/12 pt-1">
 		              <img src={attachmentIcon}/>
@@ -168,7 +167,7 @@
 			              <div class=" w-full mt-4 mr-4 ">
 											<div class="flex flex-row flex-no-wrap w-4/5 mb-2">
 												<a
-													class="bg-indigo-400 w-1/6 h-full p-5 font-bold"
+													class="bg-indigo-400 h-full p-5 font-bold text-center"
 													href={`${attachment.url}${constants.ATTACHMENT_TOKEN}`}
 													target="_blank"
 												>

@@ -87,7 +87,7 @@
 		<Loader />
 	{:then nothing}
     <div
-      class={`w-full flex-col mt-10`}
+      class={`w-5/6 flex-col mt-10`}
     >
       <div
 				class="{`absolute w-full h-screen top-0 left-0 z-30 ${(taskEditMode || taskListEditMode) ? 'block' : 'hidden'}`}"
