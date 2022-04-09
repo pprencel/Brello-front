@@ -22,7 +22,7 @@
     "jest": "^24.9.0",
     "jest-transform-svelte": "^2.1.0",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-svelte": "^4.0.4",
     "prettier": "^1.18.2",
